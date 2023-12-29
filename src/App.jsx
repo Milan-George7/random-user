@@ -58,7 +58,7 @@ const App = () => {
                </div>
               <div className='btn-div'>
                 <button onClick={handleRefresh}>
-                  Refresh
+                  Get New user
                 </button>
               </div>
             </div>
