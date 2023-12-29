@@ -1,29 +1,40 @@
-.App {
+.container-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+
+.container{
+  width: 300px;
+  height: 400px;
+  
+  
+}
+
+.btn-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button{
+  margin-top: 75px;
+  text-decoration: none;
+  width: 100px;
+  height: 35px;
+  border-radius: 10px;
+}
+
+
+
+
+.header-div h1{
   text-align: center;
-  padding: 20px;
-  font-family: 'Arial', sans-serif;
-  color: #333;
 }
 
-.user-container {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-button {
-  margin-bottom: 10px;
-  cursor: pointer;
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  outline: none;
-}
-
-button:hover {
-  background-color: #0056b3;
+.details-div{
+  margin-top: 30px;
+  text-align: center;
 }

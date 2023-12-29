@@ -1,54 +1,74 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
+import axios from 'axios';
+import './App.css'
+const App = () => {
+ const [userData, setUserData] = useState(null);
+ const [bgColor, setBgColor] = useState('white');
 
-function App() {
-  const [userData, setUserData] = useState({});
-  const [backgroundColor, setBackgroundColor] = useState('#ffffff');
+ const fetchRandomUser = async () => {
+  try {
+    const response = await axios.get('https://dummyjson.com/users');
+    // Assuming the response.data is an array of users, choose a random user
+    const randomUser = response.data.users[Math.floor(Math.random() * response.data.users.length)];
+    setUserData(randomUser);
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+  }
+};
 
-  useEffect(() => {
-    fetchUserData();
-  }, []);
-
-  const fetchUserData = async () => {
-    try {
-      const response = await fetch('https://dummyjson.com/users');
-      const data = await response.json();
-      setUserData(data[0]);
-    } catch (error) {
-      console.error('Error fetching data:', error);
+ const generateRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
     }
-  };
+    setBgColor(color);
+ };
 
-  const handleRefresh = () => {
-    fetchUserData();
-    changeBackgroundColor();
-  };
+ useEffect(() => {
+    fetchRandomUser();
+    generateRandomColor();
+ }, []);
 
-  const changeBackgroundColor = () => {
-    const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
-    setBackgroundColor(randomColor);
-  };
+ const handleRefresh = () => {
+    fetchRandomUser();
+    generateRandomColor();
+ };
 
-  return (
-    <div className="App" style={{ backgroundColor }}>
-      <div className="user-container">
-        <h1>Random User Generator</h1>
-        <button onClick={handleRefresh}>Refresh</button>
-        {userData && (
-          <>
-            <div>
-              <strong>Name:</strong> {userData.name}
+ return (
+<div className='container-box'>
+<div className='container'>
+        <div style={{ backgroundColor: bgColor}} className='box'>
+          {userData ? (
+            <div className='inner-box'>
+              <div className='header-div'>
+                <h1>Random User Generator</h1>
+                </div>
+
+              <div>
+              <img src={userData.image} alt="" />
+              
+           <div className='details-div' style={{textAlign:'justify'}}>
+                <strong>Name:</strong> {userData.firstName} {userData.lastName} , <strong>age</strong>:{userData.age}<br />
+                <strong>Email:</strong> {userData.email} <br />
+                <strong>Phone:</strong>{userData.phone} <br />
+                <strong>Address:</strong>{userData.address.address},{userData.address.city}
+
+           </div>          
+               </div>
+              <div className='btn-div'>
+                <button onClick={handleRefresh}>
+                  Refresh
+                </button>
+              </div>
             </div>
-            <div>
-              <strong>Email:</strong> {userData.email}
-            </div>
-            {/* Add more user details as needed */}
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
+          ) : (
+            <p>Loading...</p>
+          )}
+       </div>
+</div>
+</div>
+ );
+};
 
-export default App;
-
+export default App;
